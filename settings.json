@@ -50,6 +50,7 @@
   "editor.fontLigatures": true,
 
   "editor.tabSize": 2,
+  "editor.insertSpaces": true,
   "editor.detectIndentation": false,
 
   "editor.minimap.enabled": false,
@@ -80,10 +81,43 @@
   "editor.inlineSuggest.enabled": true,
 
   /* ==========================================================
-     PRETTIER (FRONT-END)
+     FORMATTERS
   ========================================================== */
   "editor.defaultFormatter": "esbenp.prettier-vscode",
 
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[blade]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[php]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+  },
+
+  /* ==========================================================
+     PRETTIER
+  ========================================================== */
   "prettier.singleQuote": true,
   "prettier.semi": false,
   "prettier.trailingComma": "all",
@@ -93,7 +127,12 @@
   /* ==========================================================
      ESLINT
   ========================================================== */
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
   "eslint.alwaysShowStatus": true,
   "eslint.format.enable": true,
 
@@ -107,27 +146,19 @@
   /* ==========================================================
      PHP / LARAVEL
   ========================================================== */
-  "[php]": {
-    "editor.tabSize": 4,
-    "editor.insertSpaces": true,
-    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
-  },
-
   "php.validate.enable": true,
   "php.validate.executablePath": "C:\\xampp\\php\\php.exe",
   "php.validate.run": "onType",
 
   "intelephense.environment.phpVersion": "8.2",
   "intelephense.files.maxSize": 10000000,
-  "intelephense.files.exclude": ["**/node_modules/**", "**/vendor/**", "**/storage/**"],
+  "intelephense.files.exclude": [
+    "**/node_modules/**",
+    "**/vendor/**",
+    "**/storage/**"
+  ],
   "intelephense.format.enable": true,
   "intelephense.diagnostics.undefinedTypes": false,
-
-  /* Blade */
-  "[blade]": {
-    "editor.defaultFormatter": "shufo.vscode-blade-formatter",
-    "editor.formatOnSave": true
-  },
 
   "emmet.includeLanguages": {
     "php": "html",
@@ -192,5 +223,6 @@
   "security.workspace.trust.untrustedFiles": "open",
   "extensions.ignoreRecommendations": false,
   "update.mode": "start",
-  "workbench.colorTheme": "One Dark Pro Monokai Darker"
+  "workbench.colorTheme": "One Dark Pro Monokai Darker",
+  "liveServer.settings.donotShowInfoMsg": true
 }
