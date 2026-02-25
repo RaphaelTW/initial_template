@@ -1,0 +1,196 @@
+{
+  /* ==========================================================
+     WORKBENCH / UI
+  ========================================================== */
+  "workbench.startupEditor": "none",
+  "workbench.iconTheme": "a-file-icon-vscode",
+  "window.commandCenter": true,
+  "window.zoomLevel": 0,
+
+  "breadcrumbs.enabled": true,
+  "explorer.compactFolders": false,
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+
+  /* ==========================================================
+     PERFORMANCE
+  ========================================================== */
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 500,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true
+  },
+
+  "files.watcherExclude": {
+    "**/.git/**": true,
+    "**/node_modules/**": true,
+    "**/vendor/**": true,
+    "**/dist/**": true,
+    "**/build/**": true,
+    "**/storage/**": true
+  },
+
+  "search.followSymlinks": false,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/vendor": true,
+    "**/dist": true
+  },
+
+  /* ==========================================================
+     EDITOR CORE
+  ========================================================== */
+  "editor.fontFamily": "JetBrains Mono",
+  "editor.fontSize": 14,
+  "editor.lineHeight": 24,
+  "editor.fontLigatures": true,
+
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+
+  "editor.minimap.enabled": false,
+  "editor.stickyScroll.enabled": false,
+  "editor.renderWhitespace": "selection",
+  "editor.renderControlCharacters": false,
+
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.smoothScrolling": true,
+
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+
+  "editor.linkedEditing": true,
+
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+
+  "editor.inlineSuggest.enabled": true,
+
+  /* ==========================================================
+     PRETTIER (FRONT-END)
+  ========================================================== */
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  "prettier.singleQuote": true,
+  "prettier.semi": false,
+  "prettier.trailingComma": "all",
+  "prettier.printWidth": 100,
+  "prettier.arrowParens": "always",
+
+  /* ==========================================================
+     ESLINT
+  ========================================================== */
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "eslint.alwaysShowStatus": true,
+  "eslint.format.enable": true,
+
+  /* ==========================================================
+     TYPESCRIPT / NODE
+  ========================================================== */
+  "typescript.tsserver.maxTsServerMemory": 4096,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+
+  /* ==========================================================
+     PHP / LARAVEL
+  ========================================================== */
+  "[php]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+  },
+
+  "php.validate.enable": true,
+  "php.validate.executablePath": "C:\\xampp\\php\\php.exe",
+  "php.validate.run": "onType",
+
+  "intelephense.environment.phpVersion": "8.2",
+  "intelephense.files.maxSize": 10000000,
+  "intelephense.files.exclude": ["**/node_modules/**", "**/vendor/**", "**/storage/**"],
+  "intelephense.format.enable": true,
+  "intelephense.diagnostics.undefinedTypes": false,
+
+  /* Blade */
+  "[blade]": {
+    "editor.defaultFormatter": "shufo.vscode-blade-formatter",
+    "editor.formatOnSave": true
+  },
+
+  "emmet.includeLanguages": {
+    "php": "html",
+    "blade": "html"
+  },
+
+  /* ==========================================================
+     PYTHON
+  ========================================================== */
+  "[python]": {
+    "editor.formatOnSave": true
+  },
+
+  "python.analysis.autoSearchPaths": true,
+  "python.analysis.typeCheckingMode": "basic",
+
+  /* ==========================================================
+     RUBY
+  ========================================================== */
+  "[ruby]": {
+    "editor.tabSize": 2
+  },
+
+  /* ==========================================================
+     LUA / LOVE2D
+  ========================================================== */
+  "[lua]": {
+    "editor.tabSize": 2
+  },
+
+  "Lua.runtime.version": "Lua 5.1",
+  "Lua.diagnostics.globals": ["love"],
+  "Lua.workspace.checkThirdParty": false,
+
+  /* ==========================================================
+     GIT
+  ========================================================== */
+  "git.autofetch": true,
+  "git.autofetchPeriod": 180,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "git.openRepositoryInParentFolders": "always",
+
+  "diffEditor.ignoreTrimWhitespace": false,
+
+  /* ==========================================================
+     TERMINAL
+  ========================================================== */
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "terminal.integrated.fontFamily": "FiraCode Nerd Font",
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.scrollback": 10000,
+
+  /* ==========================================================
+     SPELL CHECK
+  ========================================================== */
+  "cSpell.language": "en,pt,pt-BR",
+
+  /* ==========================================================
+     QUALITY OF LIFE
+  ========================================================== */
+  "security.workspace.trust.untrustedFiles": "open",
+  "extensions.ignoreRecommendations": false,
+  "update.mode": "start",
+  "workbench.colorTheme": "One Dark Pro Monokai Darker"
+}
