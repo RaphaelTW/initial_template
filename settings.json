@@ -79,6 +79,7 @@
   },
 
   "editor.inlineSuggest.enabled": true,
+  "editor.tabCompletion": "on",
 
   /* ==========================================================
      FORMATTERS
@@ -106,7 +107,7 @@
   },
 
   "[blade]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "shufo.vscode-blade-formatter"
   },
 
   "[php]": {

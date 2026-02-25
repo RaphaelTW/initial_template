@@ -1,262 +1,108 @@
 /* =========================================================
-   MODERN CSS RESET + DESIGN SYSTEM BASE
+   MODERN CSS RESET + BOOTSTRAP COMPATIBILITY
    Author: Raphael Laurentino Base Template
-   Version: 2.0
+   Baseado no reset clássico, mas adaptado para não conflitar
+   com o Reboot do Bootstrap.
+   Version: 2.1
 ========================================================= */
 
-/* =========================================================
-   1️⃣ RESET INTELIGENTE
-========================================================= */
 
-/* Box sizing */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Garantir box-sizing border-box em todos os elementos (padrão Bootstrap) */
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-/* Remove margin padrão */
-* {
-  margin: 0;
+/* Remover margem e padding apenas de elementos que não são estilizados pelo Bootstrap */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit; /* Isso pode ser sobrescrito pelo Bootstrap depois */
+    vertical-align: baseline;
 }
 
-/* Melhora renderização */
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
+/* Display block para elementos HTML5 (já é padrão em navegadores modernos, mas mantemos) */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
 }
 
-/* Melhor tipografia base */
+/* Ajustes na tipografia base para acompanhar o Bootstrap */
 body {
-  min-height: 100vh;
-  line-height: 1.6;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  font-synthesis: none;
+    line-height: 1.5; /* Bootstrap usa 1.5 */
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif; /* fallback igual ao Bootstrap */
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden; /* Evitar rolagem horizontal desnecessária */
 }
 
-/* Remove estilos padrão */
-ul,
-ol {
-  list-style: none;
-  padding: 0;
-}
-
+/* Remover decoração de links */
 a {
-  text-decoration: none;
-  color: inherit;
+    text-decoration: none;
+    color: inherit;
 }
 
-/* Mídia responsiva */
-img,
-picture,
-video,
-canvas,
-svg {
-  display: block;
-  max-width: 100%;
-  height: auto;
+/* Listas: remover marcadores, mas preservar margem inferior se houver conteúdo (Bootstrap usa margin-bottom) */
+ol, ul {
+    list-style: none;
 }
 
-/* Form herda fonte */
-input,
-button,
-textarea,
-select {
-  font: inherit;
-  color: inherit;
+/* Citações */
+blockquote, q {
+    quotes: none;
 }
 
-/* Remove estilo default de botão */
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+/* Tabelas: manter collapse, mas sem bordas extras */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Imagens responsivas por padrão (Bootstrap faz o mesmo) */
+img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+
+/* Formulários: herdar fontes e remover aparência padrão em alguns elementos */
+button, input, optgroup, select, textarea {
+    font: inherit; /* herda a fonte do body */
+    margin: 0; /* remove margens padrão */
+}
+
+/* Remover borda azul padrão do Chrome em elementos focados (Bootstrap tem seu próprio outline) */
+:focus-visible {
+    outline: none;
+}
+
+/* Opcional: remover fundo cinza em botões no Firefox */
 button {
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-/* Textarea comportamento previsível */
-textarea {
-  resize: vertical;
-}
-
-/* Remove outline apenas se tiver focus-visible */
-:focus:not(:focus-visible) {
-  outline: none;
-}
-
-/* Scrollbar moderna (Webkit) */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-border);
-  border-radius: 999px;
-}
-
-/* Seleção de texto */
-::selection {
-  background: var(--color-primary);
-  color: #fff;
-}
-
-/* =========================================================
-   2️⃣ DESIGN TOKENS (BASE)
-========================================================= */
-
-:root {
-  /* ===== FONT ===== */
-  --font-primary: "Inter", system-ui, -apple-system, sans-serif;
-
-  /* ===== LAYOUT ===== */
-  --container-width: 1200px;
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 14px;
-
-  /* ===== TRANSITIONS ===== */
-  --transition-fast: 0.15s ease;
-  --transition-base: 0.25s ease;
-  --transition-slow: 0.4s ease;
-
-  /* ===== SHADOWS ===== */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
-}
-
-/* =========================================================
-   3️⃣ LIGHT THEME (DEFAULT)
-========================================================= */
-
-:root {
-  --color-bg: #ffffff;
-  --color-surface: #f8fafc;
-  --color-text: #0f172a;
-  --color-muted: #64748b;
-  --color-primary: #4f46e5;
-  --color-border: #e2e8f0;
-}
-
-/* =========================================================
-   4️⃣ DARK THEME
-========================================================= */
-
-[data-theme="dark"] {
-  --color-bg: #0f172a;
-  --color-surface: #1e293b;
-  --color-text: #e2e8f0;
-  --color-muted: #94a3b8;
-  --color-primary: #6366f1;
-  --color-border: #334155;
-}
-
-/* Auto detect */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    --color-bg: #0f172a;
-    --color-surface: #1e293b;
-    --color-text: #e2e8f0;
-    --color-muted: #94a3b8;
-    --color-primary: #6366f1;
-    --color-border: #334155;
-  }
-}
-
-/* =========================================================
-   5️⃣ BASE GLOBAL
-========================================================= */
-
-body {
-  font-family: var(--font-primary);
-  background: var(--color-bg);
-  color: var(--color-text);
-  transition:
-    background var(--transition-base),
-    color var(--transition-base);
-}
-
-/* Container responsivo */
-.container {
-  width: min(100% - 2rem, var(--container-width));
-  margin-inline: auto;
-}
-
-/* =========================================================
-   6️⃣ TIPOGRAFIA BASE
-========================================================= */
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: 600;
-  line-height: 1.2;
-  text-wrap: balance;
-}
-
-p {
-  color: var(--color-muted);
-}
-
-/* Links acessíveis */
-a:hover {
-  color: var(--color-primary);
-}
-
-/* =========================================================
-   7️⃣ UTILIDADES
-========================================================= */
-
-.flex {
-  display: flex;
-}
-.grid {
-  display: grid;
-}
-.hidden {
-  display: none !important;
-}
-.text-center {
-  text-align: center;
-}
-.rounded-sm {
-  border-radius: var(--radius-sm);
-}
-.rounded-md {
-  border-radius: var(--radius-md);
-}
-.rounded-lg {
-  border-radius: var(--radius-lg);
-}
-
-.shadow-sm {
-  box-shadow: var(--shadow-sm);
-}
-.shadow-md {
-  box-shadow: var(--shadow-md);
-}
-.shadow-lg {
-  box-shadow: var(--shadow-lg);
-}
-
-.transition {
-  transition: all var(--transition-base);
-}
-
-/* =========================================================
-   8️⃣ MELHOR ACESSIBILIDADE
-========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
+    background: transparent;
+    border: none;
+    cursor: pointer;
 }
