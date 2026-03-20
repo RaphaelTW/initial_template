@@ -58,14 +58,14 @@
   "editor.renderWhitespace": "selection",
   "editor.renderControlCharacters": false,
 
-  "editor.cursorSmoothCaretAnimation": "on",
-  "editor.smoothScrolling": true,
+  "editor.cursorSmoothCaretAnimation": "off",
+  "editor.smoothScrolling": false,
 
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": true,
 
-  "editor.formatOnSave": true,
-  "editor.formatOnPaste": true,
+  "editor.formatOnSave": false,
+  "editor.formatOnPaste": false,
 
   "editor.linkedEditing": true,
 
@@ -170,7 +170,7 @@
      PYTHON
   ========================================================== */
   "[python]": {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": false
   },
 
   "python.analysis.autoSearchPaths": true,
@@ -191,7 +191,9 @@
   },
 
   "Lua.runtime.version": "Lua 5.1",
-  "Lua.diagnostics.globals": ["love"],
+  "Lua.diagnostics.globals": [
+    "love"
+  ],
   "Lua.workspace.checkThirdParty": false,
 
   /* ==========================================================
@@ -224,6 +226,11 @@
   "security.workspace.trust.untrustedFiles": "open",
   "extensions.ignoreRecommendations": false,
   "update.mode": "start",
-  "workbench.colorTheme": "One Dark Pro Monokai Darker",
-  "liveServer.settings.donotShowInfoMsg": true
+  "liveServer.settings.donotShowInfoMsg": true,
+  "gitlens.ai.model": "vscode",
+  "gitlens.ai.vscode.model": "copilot:gpt-4.1",
+  "vscode-pets.theme": "forest",
+  "vscode-pets.petSize": "medium",
+  "vscode-pets.throwBallWithMouse": true,
+  "workbench.colorTheme": "Dracula Theme Soft"
 }
