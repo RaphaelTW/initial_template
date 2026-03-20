@@ -1,99 +1,81 @@
 #################################################
-# .htaccess HÍBRIDO - SEGURANÇA E PERFORMANCE
-# Adequado para PHP puro, HTML, JS, React, outros
+# .htaccess - PHP puro + Composer + XAMPP
+# Estrutura com raiz pública no mesmo nível do projeto
 #################################################
 
-# Desabilitar listagem de diretórios
 Options -Indexes
-
-# Remover assinatura do servidor
 ServerSignature Off
-
-# Desabilitar ETags (reduz headers)
 FileETag None
+
+#################################################
+# REWRITE
+#################################################
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Bloquear métodos HTTP desnecessários
+    RewriteCond %{REQUEST_METHOD} ^(TRACE|TRACK) [NC]
+    RewriteRule .* - [F,L]
+
+    # Bloquear acesso direto a diretórios internos
+    RewriteRule ^(configuration|controller|model|routes|vendor)/ - [F,L,NC]
+
+    # Se quiser bloquear tudo da src EXCETO css/js/imgs/audios, use o bloco abaixo
+    # RewriteRule ^src/(?!css/|js/|imgs/|audios/).*$ - [F,L,NC]
+
+    # Front controller:
+    # se não existir arquivo ou pasta real, envia para index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [L]
+</IfModule>
 
 #################################################
 # HEADERS DE SEGURANÇA
 #################################################
 <IfModule mod_headers.c>
-    # Remover header X-Powered-By (versão do PHP)
     Header always unset X-Powered-By
-
-    # Prevenir MIME sniffing
     Header always set X-Content-Type-Options "nosniff"
-
-    # Proteção contra clickjacking (permitir apenas mesma origem)
     Header always set X-Frame-Options "SAMEORIGIN"
-
-    # Controlar informações de referência
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
-
-    # Restringir recursos (geolocalização, câmera, microfone desativados)
     Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    Header always set X-Permitted-Cross-Domain-Policies "none"
 
-    # Opcional: Content-Security-Policy básica (pode ajustar conforme necessidade)
-    # Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; object-src 'none'; frame-ancestors 'self'; base-uri 'self';"
+    # Ative só se o projeto rodar 100% em HTTPS
+    # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 </IfModule>
 
 #################################################
-# PROTEÇÃO DE ARQUIVOS SENSÍVEIS
+# BLOQUEAR ARQUIVOS SENSÍVEIS
 #################################################
-# Bloquear acesso a arquivos e pastas comuns
+
+# Arquivos ocultos (.env, .git, etc.)
 <FilesMatch "^\.">
-    Order Allow,Deny
-    Deny from all
+    Require all denied
 </FilesMatch>
 
-<FilesMatch "(^artisan|\.env|\.git|\.svn|\.hg|\.(bak|backup|config|sql|log|ini|sh|inc|old|swp|yml|yaml|json)|composer\.(json|lock|phar)|package(-lock)?\.json|Gruntfile\.js|gulpfile\.js|webpack\.config\.js|README\.md|LICENSE|nginx\.conf|\.htaccess\.bak|\.htpasswd)">
-    Order Allow,Deny
-    Deny from all
+# Arquivos que nunca devem ficar públicos
+<FilesMatch "^(composer\.(json|lock)|artisan|phpunit\.xml|package(-lock)?\.json|README(\.md)?|LICENSE|web\.config|nginx\.conf|\.env.*|.*\.(sql|log|bak|backup|ini|conf|dist|yml|yaml|sh|swp|old))$">
+    Require all denied
 </FilesMatch>
 
-# Bloquear acesso a pastas sensíveis (ex: includes, vendor, node_modules)
+# Bloqueio extra para autoload e arquivos PHP sensíveis na vendor
 <IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteRule ^(includes|vendor|node_modules|storage|temp|logs|backups)/.* - [F,L]
+    RewriteRule ^vendor/.* - [F,L,NC]
 </IfModule>
 
 #################################################
-# BLOQUEIO DE USER-AGENTS MALICIOSOS (opcional)
-#################################################
-# Descomente se quiser bloquear bots maliciosos conhecidos
-# <IfModule mod_setenvif.c>
-#     SetEnvIfNoCase User-Agent "curl" bad_bot
-#     SetEnvIfNoCase User-Agent "wget" bad_bot
-#     SetEnvIfNoCase User-Agent "python-requests" bad_bot
-#     SetEnvIfNoCase User-Agent "scrapy" bad_bot
-#     SetEnvIfNoCase User-Agent "nikto" bad_bot
-#     SetEnvIfNoCase User-Agent "sqlmap" bad_bot
-#     SetEnvIfNoCase User-Agent "masscan" bad_bot
-#     SetEnvIfNoCase User-Agent "nmap" bad_bot
-#
-#     <RequireAll>
-#         Require all granted
-#         Require not env bad_bot
-#     </RequireAll>
-# </IfModule>
-
-#################################################
-# PROTEÇÃO BÁSICA CONTRA SQL INJECTION (opcional)
-#################################################
-# Aviso: pode gerar falsos positivos. Use com cuidado.
-# <IfModule mod_rewrite.c>
-#     RewriteCond %{QUERY_STRING} (union|select|insert|drop|update|delete|benchmark|sleep|information_schema) [NC,OR]
-#     RewriteCond %{QUERY_STRING} (concat\(|char\(|0x[0-9A-F]+) [NC,OR]
-#     RewriteCond %{QUERY_STRING} (\%27)|(\')|(\-\-) [NC]
-#     RewriteRule ^ - [F,L]
-# </IfModule>
-
-#################################################
-# COMPRESSÃO GZIP
+# COMPRESSÃO
 #################################################
 <IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css
-    AddOutputFilterByType DEFLATE application/xml application/xhtml+xml
-    AddOutputFilterByType DEFLATE application/javascript application/json
-    AddOutputFilterByType DEFLATE image/svg+xml font/ttf font/otf font/woff font/woff2
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE image/svg+xml
 </IfModule>
 
 #################################################
@@ -102,7 +84,7 @@ FileETag None
 <IfModule mod_expires.c>
     ExpiresActive On
 
-    # Imagens - cache longo
+    # Imagens
     ExpiresByType image/jpg "access plus 1 year"
     ExpiresByType image/jpeg "access plus 1 year"
     ExpiresByType image/png "access plus 1 year"
@@ -111,11 +93,12 @@ FileETag None
     ExpiresByType image/svg+xml "access plus 1 year"
     ExpiresByType image/x-icon "access plus 1 year"
 
-    # CSS e JS - cache médio (1 mês)
+    # CSS e JS
     ExpiresByType text/css "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
     ExpiresByType application/javascript "access plus 1 month"
 
-    # Fontes - cache longo
+    # Fontes
     ExpiresByType font/ttf "access plus 1 year"
     ExpiresByType font/otf "access plus 1 year"
     ExpiresByType font/woff "access plus 1 year"
@@ -123,48 +106,7 @@ FileETag None
 </IfModule>
 
 #################################################
-# REDIRECIONAMENTO HTTPS (opcional)
-#################################################
-# Descomente para forçar HTTPS
-# <IfModule mod_rewrite.c>
-#     RewriteEngine On
-#     RewriteCond %{HTTPS} off
-#     RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-# </IfModule>
-
-#################################################
-# ROTEAMENTO PARA APLICAÇÕES
-#################################################
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-
-    # =============================================
-    # SE FOR PHP PURO (com front controller index.php)
-    # =============================================
-    # Se o arquivo/diretório não existir, redireciona para index.php
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^ index.php [L]
-
-    # =============================================
-    # SE FOR SPA (React, Vue, etc.) - BUILD ESTÁTICO
-    # =============================================
-    # Descomente as linhas abaixo se estiver servindo um SPA e quiser que todas as rotas
-    # caiam no index.html (desde que os arquivos estáticos existam)
-    # RewriteCond %{REQUEST_FILENAME} !-f
-    # RewriteCond %{REQUEST_FILENAME} !-d
-    # RewriteRule ^ index.html [L]
-
-    # =============================================
-    # PARA OUTROS BACKENDS (Ruby, Python) - pode ser necessário
-    # usar proxy reverso ou configuração específica no Apache.
-    # O .htaccess geralmente não é suficiente; considere usar
-    # virtual hosts ou proxies (mod_proxy).
-    # =============================================
-</IfModule>
-
-#################################################
-# PREVENIR ACESSO A ARQUIVOS .HT*
+# NEGAR ACESSO A .ht*
 #################################################
 <Files ~ "^\.ht">
     Require all denied
