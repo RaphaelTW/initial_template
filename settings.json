@@ -12,6 +12,13 @@
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
 
+  "workbench.colorTheme": "Dracula Theme Soft",
+  "workbench.colorCustomizations": {
+    "scrollbarSlider.background": "#BD93F966",
+    "scrollbarSlider.hoverBackground": "#BD93F999",
+    "scrollbarSlider.activeBackground": "#BD93F9CC"
+  },
+
   /* ==========================================================
      PERFORMANCE
   ========================================================== */
@@ -231,6 +238,5 @@
   "gitlens.ai.vscode.model": "copilot:gpt-4.1",
   "vscode-pets.theme": "forest",
   "vscode-pets.petSize": "medium",
-  "vscode-pets.throwBallWithMouse": true,
-  "workbench.colorTheme": "Dracula Theme Soft"
+  "vscode-pets.throwBallWithMouse": true
 }
